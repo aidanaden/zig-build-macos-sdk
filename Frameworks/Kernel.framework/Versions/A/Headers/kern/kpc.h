@@ -31,10 +31,12 @@
 
 /* Kernel interfaces to KPC PMC infrastructure. */
 
-#include <machine/machine_kpc.h>
 #include <kern/thread.h> /* thread_* */
+#include <machine/machine_kpc.h>
 
 __BEGIN_DECLS
+
+typedef uint64_t kpc_config_t;
 
 /* cross-platform class constants */
 #define KPC_CLASS_FIXED         (0)
@@ -79,7 +81,7 @@ __BEGIN_DECLS
 typedef void (*kpc_pm_handler_t)(boolean_t);
 
 struct cpu_data;
-extern boolean_t kpc_register_cpu(struct cpu_data *cpu_data);
+extern void kpc_register_cpu(struct cpu_data *cpu_data);
 extern void kpc_unregister_cpu(struct cpu_data *cpu_data);
 
 extern bool kpc_supported;
@@ -253,7 +255,7 @@ struct kpc_config_remote {
 	uint32_t classes;
 	kpc_config_t *configv;
 	uint64_t pmc_mask;
-	bool allow_list;
+	bool secure;
 };
 
 /* handler for mp operations */
@@ -313,23 +315,6 @@ extern uint8_t kpc_popcount(uint64_t value);
 /* for a set of classes, retrieve the configurable PMCs mask */
 extern uint64_t kpc_get_configurable_pmc_mask(uint32_t classes);
 
-
-/* Interface for kexts to publish a kpc interface */
-struct kpc_driver {
-	uint32_t (*get_classes)(void);
-	uint32_t (*get_running)(void);
-	int      (*set_running)(uint32_t classes);
-	int      (*get_cpu_counters)(boolean_t all_cpus, uint32_t classes,
-	    int *curcpu, uint64_t *buf);
-	int      (*get_curthread_counters)(uint32_t *inoutcount, uint64_t *buf);
-	uint32_t (*get_counter_count)(uint32_t classes);
-	uint32_t (*get_config_count)(uint32_t classes);
-	int      (*get_config)(uint32_t classes, kpc_config_t *current_config);
-	int      (*set_config)(uint32_t classes, kpc_config_t *new_config);
-	int      (*get_period)(uint32_t classes, uint64_t *period);
-	int      (*set_period)(uint32_t classes, uint64_t *period);
-};
-
 __END_DECLS
 
-#endif /* !definde(KERN_KPC_H) */
+#endif /* !defined(KERN_KPC_H) */

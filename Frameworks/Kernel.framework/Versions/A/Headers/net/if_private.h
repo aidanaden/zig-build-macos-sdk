@@ -207,6 +207,7 @@ struct  ifreq {
 #define IFRTYPE_SUBFAMILY_MANAGEMENT    12
 		} ifru_type;
 		u_int32_t ifru_functional_type;
+		u_int32_t ifru_peer_egress_functional_type;
 #define IFRTYPE_FUNCTIONAL_UNKNOWN              0
 #define IFRTYPE_FUNCTIONAL_LOOPBACK             1
 #define IFRTYPE_FUNCTIONAL_WIRED                2
@@ -237,6 +238,7 @@ struct  ifreq {
 #define IFRTYPE_QOSMARKING_CUSTOM       3       /* supported: socket/channel */
 		u_int32_t ifru_qosmarking_enabled;
 		u_int32_t ifru_disable_output;
+		int32_t   ifru_point_to_point_mdns;
 		u_int32_t ifru_low_internet;
 #define IFRTYPE_LOW_INTERNET_DISABLE_UL_DL      0x0000
 #define IFRTYPE_LOW_INTERNET_ENABLE_UL          0x0001
@@ -254,6 +256,9 @@ struct  ifreq {
 			u_int8_t channel;
 		} ifru_radio_details;
 		uint64_t ifru_creation_generation_id;
+		u_int8_t ifru_is_directlink;
+		u_int8_t ifru_is_vpn;
+		uint32_t ifru_delay_wake_pkt_event;
 	} ifr_ifru;
 #define ifr_addr        ifr_ifru.ifru_addr      /* address */
 #define ifr_dstaddr     ifr_ifru.ifru_dstaddr   /* other end of p-to-p link */
@@ -286,6 +291,7 @@ struct  ifreq {
 #define ifr_constrained   ifr_ifru.ifru_constrained
 #define ifr_type        ifr_ifru.ifru_type      /* interface type */
 #define ifr_functional_type     ifr_ifru.ifru_functional_type
+#define ifr_peer_egress_functional_type ifr_ifru.ifru_peer_egress_functional_type
 #define ifr_2kcl        ifr_ifru.ifru_2kcl
 #define ifr_start_delay_qlen    ifr_ifru.ifru_start_delay.qlen
 #define ifr_start_delay_timeout ifr_ifru.ifru_start_delay.timeout
@@ -297,6 +303,7 @@ struct  ifreq {
 #define ifr_qosmarking_enabled  ifr_ifru.ifru_qosmarking_enabled
 #define ifr_fastlane_enabled    ifr_qosmarking_enabled
 #define ifr_disable_output      ifr_ifru.ifru_disable_output
+#define ifr_point_to_point_mdns ifr_ifru.ifru_point_to_point_mdns
 #define ifr_low_internet        ifr_ifru.ifru_low_internet
 #define ifr_low_power_mode      ifr_ifru.ifru_low_power_mode
 #define ifr_tcp_kao_max         ifr_ifru.ifru_tcp_kao_max
@@ -305,6 +312,9 @@ struct  ifreq {
 #define ifr_estimated_throughput  ifr_ifru.ifru_estimated_throughput
 #define ifr_radio_details       ifr_ifru.ifru_radio_details
 #define ifr_creation_generation_id       ifr_ifru.ifru_creation_generation_id
+#define ifr_is_directlink       ifr_ifru.ifru_is_directlink
+#define ifr_is_vpn              ifr_ifru.ifru_is_vpn
+#define ifr_delay_wake_pkt_event         ifr_ifru.ifru_delay_wake_pkt_event
 };
 
 #define _SIZEOF_ADDR_IFREQ(ifr) \
@@ -427,8 +437,6 @@ enum {
 	IFNET_RSSI_UNKNOWN      = ((-2147483647) - 1),    /* INT32_MIN */
 };
 
-
-#if !__has_ptrcheck
 /*
  * DLIL KEV_DL_NODE_PRESENCE/KEV_DL_NODE_ABSENCE event structures
  */
@@ -447,7 +455,6 @@ struct kev_dl_node_absence {
 	struct sockaddr_in6     sin6_node_address;
 	struct sockaddr_dl      sdl_node_address;
 };
-#endif
 
 /*
  * Structure for SIOC[SG]IFTHROTTLE
@@ -627,7 +634,6 @@ struct if_protolistreq {
 };
 
 
-
 /*
  * Entitlement to send/receive data on an INTCOPROC interface
  */
@@ -644,6 +650,12 @@ struct if_protolistreq {
  * Entitlement to make change to a management interface
  */
 #define MANAGEMENT_CONTROL_ENTITLEMENT "com.apple.private.network.management.control"
+
+/*
+ * Entitlement to allow socket access on ultra-constrained interfaces
+ */
+#define ULTRA_CONSTRAINED_ENTITLEMENT "com.apple.private.network.ultraconstrained"
+
 
 #endif /* (_POSIX_C_SOURCE && !_DARWIN_C_SOURCE) */
 

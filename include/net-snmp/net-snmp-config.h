@@ -1259,10 +1259,10 @@
 #define NETSNMP_CAN_DO_CRYPTO 1
 
 /* sysctl works to get boottime, etc... */
-#define NETSNMP_CAN_USE_SYSCTL 1
+/* #undef NETSNMP_CAN_USE_SYSCTL */
 
 /* configure options specified */
-#define NETSNMP_CONFIGURE_OPTIONS " '--prefix=/usr' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--disable-dependency-tracking' '--sysconfdir=/etc' '--with-install-prefix=/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Library/Caches/com.apple.xbs/Binaries/net_snmp/install/TempContent/Root' '--with-default-snmp-version=2' '--with-persistent-directory=/var/db/net-snmp' '--with-defaults' '--without-rpm' '--with-sys-contact=postmaster@example.com' '--with-mib-modules=host ucd-snmp/diskio ucd-snmp/loadave ' '--disable-static' '--enable-ipv6' '--without-perl-modules' '--disable-perl-cc-checks' '--disable-embedded-perl' '--datarootdir=/usr/share' '--with-openssl=/usr/libressl/' '--without-kmem-usage' 'CC=/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Applications/Xcode.app/Contents/Developer/Toolchains/OSX14.2.xctoolchain/usr/bin/cc' 'CFLAGS=-arch arm64e -arch x86_64 -g -Os -pipe -DBUILD=177 -DMACOSX_DEPLOYMENT_TARGET=14.2 -F/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.Internal.sdk/System/Library/PrivateFrameworks/ -F/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.Internal.sdk/System/Library/Frameworks/ -iwithsysroot /usr/local/libressl/include -L/AppleInternal/Library/BuildRoots/0032d1ee-80fd-11ee-8227-6aecfccc70fe/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.Internal.sdk/usr/local/libressl/lib' 'LDFLAGS=-arch arm64e -arch x86_64            '"
+#define NETSNMP_CONFIGURE_OPTIONS " '--prefix=/usr' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--disable-dependency-tracking' '--sysconfdir=/etc' '--with-install-prefix=/AppleInternal/Library/BuildRoots/01adf19d-fba1-11ef-a947-f2a857e00a32/Library/Caches/com.apple.xbs/Binaries/net_snmp/install/TempContent/Root' '--with-default-snmp-version=2' '--with-persistent-directory=/var/db/net-snmp' '--with-defaults' '--without-rpm' '--with-sys-contact=postmaster@example.com' '--with-mib-modules=host ucd-snmp/diskio ucd-snmp/loadave ' '--disable-static' '--enable-ipv6' '--without-perl-modules' '--disable-perl-cc-checks' '--disable-embedded-perl' '--datarootdir=/usr/share' '--with-openssl=/usr/libressl/' '--without-kmem-usage' 'CC=/AppleInternal/Library/BuildRoots/01adf19d-fba1-11ef-a947-f2a857e00a32/Applications/Xcode.app/Contents/Developer/Toolchains/OSX15.4.xctoolchain/usr/bin/cc' 'CFLAGS=-arch arm64e -arch x86_64 -g -Os -pipe -DBUILD=177 -DMACOSX_DEPLOYMENT_TARGET=15.4 -F/AppleInternal/Library/BuildRoots/01adf19d-fba1-11ef-a947-f2a857e00a32/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.Internal.sdk/System/Library/PrivateFrameworks/ -F/AppleInternal/Library/BuildRoots/01adf19d-fba1-11ef-a947-f2a857e00a32/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.Internal.sdk/System/Library/Frameworks/ -iwithsysroot /usr/local/libressl/include -L/AppleInternal/Library/BuildRoots/01adf19d-fba1-11ef-a947-f2a857e00a32/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.Internal.sdk/usr/local/libressl/lib' 'LDFLAGS=-arch arm64e -arch x86_64            '"
 
 /* default location to look for mibs to load using the above tokens and/or
    those in the MIBS envrionment variable */
@@ -1669,7 +1669,7 @@
 #define NETSNMP_MAX_PERSISTENT_BACKUPS 10
 
 /* define the system type include file here */
-#define NETSNMP_SYSTEM_INCLUDE_FILE "net-snmp/system/darwin23.h"
+#define NETSNMP_SYSTEM_INCLUDE_FILE "net-snmp/system/darwin.h"
 
 /* define the machine (cpu) type include file here */
 #define NETSNMP_MACHINE_INCLUDE_FILE "net-snmp/machine/generic.h"

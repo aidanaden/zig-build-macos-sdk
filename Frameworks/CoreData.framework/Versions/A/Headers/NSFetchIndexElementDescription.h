@@ -1,7 +1,7 @@
 /*
     NSFetchIndexElementDescription.h
     Core Data
-    Copyright (c) 2017-2023, Apple Inc.
+    Copyright (c) 2017-2025, Apple Inc.
     All rights reserved.
 */
 

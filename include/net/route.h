@@ -126,12 +126,6 @@ struct rt_metrics {
                                         /* 0x80000000 unassigned */
 
 #define RTPRF_OURS      RTF_PROTO3      /* set on routes we manage */
-#define RTF_BITS \
-	"\020\1UP\2GATEWAY\3HOST\4REJECT\5DYNAMIC\6MODIFIED\7DONE" \
-	"\10DELCLONE\11CLONING\12XRESOLVE\13LLINFO\14STATIC\15BLACKHOLE" \
-	"\16NOIFREF\17PROTO2\20PROTO1\21PRCLONING\22WASCLONED\23PROTO3" \
-	"\25PINNED\26LOCAL\27BROADCAST\30MULTICAST\31IFSCOPE\32CONDEMNED" \
-	"\33IFREF\34PROXY\35ROUTER\37GLOBAL"
 
 #define IS_DIRECT_HOSTROUTE(rt) \
 	(((rt)->rt_flags & (RTF_HOST | RTF_GATEWAY)) == RTF_HOST)
@@ -149,7 +143,7 @@ struct rt_metrics {
 /*
  * Routing statistics.
  */
-struct  rtstat {
+struct rtstat {
 	short   rts_badredirect;        /* bogus redirect calls */
 	short   rts_dynamic;            /* routes created by redirects */
 	short   rts_newgateway;         /* routes modified by redirects */
@@ -189,6 +183,10 @@ struct rt_msghdr2 {
 	int     rtm_use;        /* from rtentry */
 	u_int32_t rtm_inits;    /* which metrics we are initializing */
 	struct rt_metrics rtm_rmx; /* metrics themselves */
+};
+
+struct rt_msghdr_prelude {
+	u_short rtm_msglen;     /* to skip over non-understood messages */
 };
 
 #define RTM_VERSION     5       /* Up the ante and ignore older versions */

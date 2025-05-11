@@ -280,6 +280,7 @@ struct tcp_info {
 	    tcpi_tfo_recv_blackhole:1, /* A receiver-blackhole got detected */
 	    tcpi_tfo_onebyte_proxy:1; /* A proxy acknowledges all but one byte of the SYN */
 
+#define TCPINFO_HAS_L4S_STATE 1
 	u_int16_t       tcpi_ecn_client_setup:1,    /* Attempted ECN setup from client side */
 	    tcpi_ecn_server_setup:1,                /* Attempted ECN setup from server side */
 	    tcpi_ecn_success:1,                     /* peer negotiated ECN */
@@ -292,7 +293,8 @@ struct tcp_info {
 	    tcpi_if_wifi_infra:1,           /* Interface is wifi infrastructure */
 	    tcpi_if_wifi_awdl:1,            /* Interface is wifi AWDL */
 	    tcpi_snd_background:1,          /* Using delay based algorithm on sender side */
-	    tcpi_rcv_background:1;          /* Using delay based algorithm on receive side */
+	    tcpi_rcv_background:1,          /* Using delay based algorithm on receive side */
+	    tcpi_l4s_enabled:1;             /* Whether L4S is enabled or not */
 
 	u_int32_t       tcpi_ecn_recv_ce;   /* Packets received with CE */
 	u_int32_t       tcpi_ecn_recv_cwr;  /* Packets received with CWR */
@@ -313,8 +315,17 @@ struct tcp_info {
 	uint32_t       tcpi_server_accecn_state;   /* Server's Accurate ECN state as seen by clent */
 	uint64_t       tcpi_ecn_capable_packets_sent;   /* Packets sent with ECT */
 	uint64_t       tcpi_ecn_capable_packets_acked;  /* Packets sent with ECT that were ACKed */
-	uint64_t       tcpi_ecn_capable_packets_marked; /* Packets sent with ECT that were marked */
+	uint64_t       tcpi_ecn_capable_packets_marked; /* Packets sent with ECT that were marked, same as delivered_ce_packets */
 	uint64_t       tcpi_ecn_capable_packets_lost;   /* Packets sent with ECT that were lost */
+
+#define TCPINFO_HAS_L4S 1
+	uint64_t       tcpi_received_ce_packets;
+	uint64_t       tcpi_received_ect0_bytes;
+	uint64_t       tcpi_received_ect1_bytes;
+	uint64_t       tcpi_received_ce_bytes;
+	uint64_t       tcpi_delivered_ect0_bytes;
+	uint64_t       tcpi_delivered_ect1_bytes;
+	uint64_t       tcpi_delivered_ce_bytes;
 
 #define TCPINFO_HAS_LIMITED_TIME 1
 	uint64_t       tcpi_flow_control_total_time;

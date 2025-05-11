@@ -1,7 +1,7 @@
 /*
 	NSTextInputClient.h
 	Application Kit
-	Copyright (c) 2006-2023, Apple Inc.
+	Copyright (c) 2006-2024, Apple Inc.
 	All rights reserved.
  */
 
@@ -16,6 +16,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @class NSAttributedString;
+@class NSAdaptiveImageGlyph;
 
 typedef NS_ENUM(NSInteger, NSTextCursorAccessoryPlacement) {
     NSTextCursorAccessoryPlacementUnspecified,
@@ -100,17 +101,24 @@ typedef NS_ENUM(NSInteger, NSTextCursorAccessoryPlacement) {
  */
 - (NSTextCursorAccessoryPlacement)preferredTextAccessoryPlacement;
 
-/* Return rect which covers whole selected text in screen coordinate. If this method isn't provided, -selectedRange + -firstRectForCharRange:actualRange: will be used.
+/* Return rect which covers whole selected text in screen coordinate. If this method isn't provided, -selectedRange + -firstRectForCharRange:actualRange: will be used. If the selected text is partially visible in the current clip view, it’s ok for `unionRectInVisibleSelectedRange` to go beyond `documentVisibleRect`.
 
- To support dictation indicator on custom text view, expose this method and `-documentVisibleRect`, and also calls `-[NSTextInputContext willStartScrollingOrZooming]`/ `-[NSTextInputContext didEndScrollingOrZooming]` when needed.
+ To support dictation indicator on custom text view, expose this method and `-documentVisibleRect`, and call `-[NSTextInputContext willStartScrollingOrZooming]`/ `-[NSTextInputContext didEndScrollingOrZooming]` when needed.
+ To support Writing Tools affordance on custom text view, expose this method and `-documentVisibleRect`, and call `-[NSTextInputContext textInputClientDidUpdateSelectionRect]` when needed.
  */
 @property (readonly) NSRect unionRectInVisibleSelectedRange API_AVAILABLE(macos(14.0));
 
 /* Return visible rect of document area in screen coordinate. If this method isn't provided, -[NSView  visibleRect] will be used.
 
- To support dictation indicator on custom text view, expose this method and `-selectionRect`, and also calls `-[NSTextInputContext willStartScrollingOrZooming]`/ `-[NSTextInputContext didEndScrollingOrZooming]` when needed.
+ To support dictation indicator on custom text view, expose this method and `-unionRectInVisibleSelectedRange`, and call `-[NSTextInputContext willStartScrollingOrZooming]`/ `-[NSTextInputContext didEndScrollingOrZooming]` when needed.
+ To support Writing Tools affordance on custom text view, expose this method and `-unionRectInVisibleSelectedRange `, and call `-[NSTextInputContext textInputClientDidUpdateSelectionRect]` when needed.
  */
 @property (readonly) NSRect documentVisibleRect API_AVAILABLE(macos(14.0));
+
+@optional
+@property (readonly) BOOL supportsAdaptiveImageGlyph API_AVAILABLE(macos(15.0));
+
+- (void)insertAdaptiveImageGlyph:(NSAdaptiveImageGlyph *)adaptiveImageGlyph replacementRange:(NSRange)replacementRange NS_SWIFT_NAME(insert(_:replacementRange:)) API_AVAILABLE(macos(15.0));
 
 @end
 

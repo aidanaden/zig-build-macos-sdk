@@ -1948,7 +1948,8 @@ CF_ENUM(AudioClassID)
                         responsible for releasing the returned CFObject.
     @constant       kAudioProcessPropertyDevices
                         An array of AudioObjectIDs that represent the devices currently used by the
-                        process for output.
+                        process for input or used by the process for output. The scope will select
+                        the input or output device list.
     @constant       kAudioProcessPropertyIsRunning
                         A UInt32 where a value of 0 indicates that there is not audio IO in progress
                         in the process, and a value of 1 indicates that there is audio IO in progress
@@ -1962,10 +1963,6 @@ CF_ENUM(AudioClassID)
                         A UInt32 where a value of 0 indicates that the process is not running any
                         IO or there is not any active output streams, and a value of 1 indicates that
                         the process is running IO and there is at least one active output stream.
-    @constant       kAudioProcessPropertyIsMuted
-                        A UInt32 where a value of 0 indicates that the process is playing audio
-                        through its selected audio devices and a value of 1 indicates that a process
-                        is currently muted by an audio tap.
 */
 CF_ENUM(AudioObjectPropertySelector)
 {

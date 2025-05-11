@@ -85,24 +85,32 @@
 #define T_PF_USER               0x4             /* from user state */
 
 #if !defined(ASSEMBLER)
-__attribute__((cold, always_inline))
-static inline void
-ml_recoverable_trap(unsigned int code)
-__attribute__((diagnose_if(!__builtin_constant_p(code), "code must be constant", "error")))
-{
-	__asm__ volatile ("brk #%0" : : "i"(code));
-}
 
-__attribute__((cold, noreturn, always_inline))
-static inline void
-ml_fatal_trap(unsigned int code)
-__attribute__((diagnose_if(!__builtin_constant_p(code), "code must be constant", "error")))
-{
-	__asm__ volatile ("brk #%0" : : "i"(code));
-	__builtin_unreachable();
-}
+#if __arm64__
+#define ML_TRAP_REGISTER_1      "x8"
+#define ML_TRAP_REGISTER_2      "x16"
+#define ML_TRAP_REGISTER_3      "x17"
+#else
+#define ML_TRAP_REGISTER_1      "r8"
+#define ML_TRAP_REGISTER_2      "r0"
+#define ML_TRAP_REGISTER_3      "r1"
+#endif
+
+#define ml_recoverable_trap(code) \
+	__asm__ volatile ("brk #%0" : : "i"(code))
+
+#if __has_builtin(__builtin_arm_trap)
+#define ml_fatal_trap(code) ({ \
+	__builtin_arm_trap(code); \
+	__builtin_unreachable(); \
+})
+#else
+#define ml_fatal_trap(code)  ({ \
+	ml_recoverable_trap(code); \
+	__builtin_unreachable(); \
+})
+#endif
 
 #endif /* !ASSEMBLER */
-
 
 #endif  /* _ARM_TRAP_H_ */

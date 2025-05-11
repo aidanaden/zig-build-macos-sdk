@@ -285,8 +285,8 @@ struct chroot_args {
 	char path_l_[PADL_(user_addr_t)]; user_addr_t path; char path_r_[PADR_(user_addr_t)];
 };
 struct msync_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
 };
 #if CONFIG_VFORK
@@ -295,23 +295,37 @@ struct vfork_args {
 };
 #else
 #endif
+struct oslog_coproc_reg_args {
+	char uuid_l_[PADL_(user_addr_t)]; user_addr_t uuid; char uuid_r_[PADR_(user_addr_t)];
+	char file_path_l_[PADL_(user_addr_t)]; user_addr_t file_path; char file_path_r_[PADR_(user_addr_t)];
+	char file_path_len_l_[PADL_(user_size_t)]; user_size_t file_path_len; char file_path_len_r_[PADR_(user_size_t)];
+};
+struct oslog_coproc_args {
+	char buff_l_[PADL_(user_addr_t)]; user_addr_t buff; char buff_r_[PADR_(user_addr_t)];
+	char buff_len_l_[PADL_(uint64_t)]; uint64_t buff_len; char buff_len_r_[PADR_(uint64_t)];
+	char type_l_[PADL_(uint32_t)]; uint32_t type; char type_r_[PADR_(uint32_t)];
+	char uuid_l_[PADL_(user_addr_t)]; user_addr_t uuid; char uuid_r_[PADR_(user_addr_t)];
+	char timestamp_l_[PADL_(uint64_t)]; uint64_t timestamp; char timestamp_r_[PADR_(uint64_t)];
+	char offset_l_[PADL_(uint32_t)]; uint32_t offset; char offset_r_[PADR_(uint32_t)];
+	char stream_log_l_[PADL_(uint32_t)]; uint32_t stream_log; char stream_log_r_[PADR_(uint32_t)];
+};
 struct munmap_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 };
 struct mprotect_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char prot_l_[PADL_(int)]; int prot; char prot_r_[PADR_(int)];
 };
 struct madvise_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char behav_l_[PADL_(int)]; int behav; char behav_r_[PADR_(int)];
 };
 struct mincore_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char vec_l_[PADL_(user_addr_t)]; user_addr_t vec; char vec_r_[PADR_(user_addr_t)];
 };
 struct getgroups_args {
@@ -681,8 +695,8 @@ struct getdirentries_args {
 	char basep_l_[PADL_(user_addr_t)]; user_addr_t basep; char basep_r_[PADR_(user_addr_t)];
 };
 struct mmap_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char prot_l_[PADL_(int)]; int prot; char prot_r_[PADR_(int)];
 	char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
 	char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
@@ -710,12 +724,12 @@ struct sysctl_args {
 	char newlen_l_[PADL_(user_size_t)]; user_size_t newlen; char newlen_r_[PADR_(user_size_t)];
 };
 struct mlock_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 };
 struct munlock_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 };
 struct undelete_args {
 	char path_l_[PADL_(user_addr_t)]; user_addr_t path; char path_r_[PADR_(user_addr_t)];
@@ -894,8 +908,8 @@ struct fhopen_args {
 #else
 #endif
 struct minherit_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char inherit_l_[PADL_(int)]; int inherit; char inherit_r_[PADR_(int)];
 };
 #if SYSV_SEM
@@ -1636,8 +1650,8 @@ struct accept_nocancel_args {
 #else
 #endif /* SOCKETS */
 struct msync_nocancel_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
 };
 struct fcntl_nocancel_args {
@@ -2124,8 +2138,8 @@ struct renameatx_np_args {
 };
 #if CONFIG_CODE_DECRYPTION
 struct mremap_encrypted_args {
-	char addr_l_[PADL_(user_addr_t)]; user_addr_t addr; char addr_r_[PADR_(user_addr_t)];
-	char len_l_[PADL_(user_size_t)]; user_size_t len; char len_r_[PADR_(user_size_t)];
+	char addr_l_[PADL_(user_addr_ut)]; user_addr_ut addr; char addr_r_[PADR_(user_addr_ut)];
+	char len_l_[PADL_(user_size_ut)]; user_size_ut len; char len_r_[PADR_(user_size_ut)];
 	char cryptid_l_[PADL_(uint32_t)]; uint32_t cryptid; char cryptid_r_[PADR_(uint32_t)];
 	char cputype_l_[PADL_(uint32_t)]; uint32_t cputype; char cputype_r_[PADR_(uint32_t)];
 	char cpusubtype_l_[PADL_(uint32_t)]; uint32_t cpusubtype; char cpusubtype_r_[PADR_(uint32_t)];
@@ -2416,7 +2430,7 @@ struct shared_region_map_and_slide_2_np_args {
 	char files_count_l_[PADL_(uint32_t)]; uint32_t files_count; char files_count_r_[PADR_(uint32_t)];
 	char files_l_[PADL_(user_addr_t)]; user_addr_t files; char files_r_[PADR_(user_addr_t)];
 	char mappings_count_l_[PADL_(uint32_t)]; uint32_t mappings_count; char mappings_count_r_[PADR_(uint32_t)];
-	char mappings_l_[PADL_(user_addr_t)]; user_addr_t mappings; char mappings_r_[PADR_(user_addr_t)];
+	char mappings_u_l_[PADL_(user_addr_t)]; user_addr_t mappings_u; char mappings_u_r_[PADR_(user_addr_t)];
 };
 struct pivot_root_args {
 	char new_rootfs_path_before_l_[PADL_(user_addr_t)]; user_addr_t new_rootfs_path_before; char new_rootfs_path_before_r_[PADR_(user_addr_t)];
@@ -2527,6 +2541,18 @@ struct ungraftdmg_args {
 	char mountdir_l_[PADL_(user_addr_t)]; user_addr_t mountdir; char mountdir_r_[PADR_(user_addr_t)];
 	char flags_l_[PADL_(uint64_t)]; uint64_t flags; char flags_r_[PADR_(uint64_t)];
 };
+#if CONFIG_COALITIONS
+struct coalition_policy_set_args {
+	char cid_l_[PADL_(uint64_t)]; uint64_t cid; char cid_r_[PADR_(uint64_t)];
+	char flavor_l_[PADL_(uint32_t)]; uint32_t flavor; char flavor_r_[PADR_(uint32_t)];
+	char value_l_[PADL_(uint32_t)]; uint32_t value; char value_r_[PADR_(uint32_t)];
+};
+struct coalition_policy_get_args {
+	char cid_l_[PADL_(uint64_t)]; uint64_t cid; char cid_r_[PADR_(uint64_t)];
+	char flavor_l_[PADL_(uint32_t)]; uint32_t flavor; char flavor_r_[PADR_(uint32_t)];
+};
+#else
+#endif /* CONFIG_COALITIONS */
 int nosys(struct proc *, struct nosys_args *, int *);
 void exit(struct proc *, struct exit_args *, int32_t *);
 int fork(struct proc *, struct fork_args *, int *);
@@ -2537,8 +2563,8 @@ int sys_close(struct proc *, struct close_args *, int *);
 int wait4(struct proc *, struct wait4_args *, int *);
 int link(struct proc *, struct link_args *, int *);
 int unlink(struct proc *, struct unlink_args *, int *);
-int chdir(struct proc *, struct chdir_args *, int *);
-int fchdir(struct proc *, struct fchdir_args *, int *);
+int sys_chdir(struct proc *, struct chdir_args *, int *);
+int sys_fchdir(struct proc *, struct fchdir_args *, int *);
 int mknod(struct proc *, struct mknod_args *, int *);
 int chmod(struct proc *, struct chmod_args *, int *);
 int chown(struct proc *, struct chown_args *, int *);
@@ -2588,6 +2614,8 @@ int msync(struct proc *, struct msync_args *, int *);
 int vfork(struct proc *, struct vfork_args *, int *);
 #else
 #endif
+int oslog_coproc_reg(struct proc *, struct oslog_coproc_reg_args *, int *);
+int oslog_coproc(struct proc *, struct oslog_coproc_args *, int *);
 int munmap(struct proc *, struct munmap_args *, int *);
 int mprotect(struct proc *, struct mprotect_args *, int *);
 int madvise(struct proc *, struct madvise_args *, int *);
@@ -3120,6 +3148,11 @@ int sys_record_system_event(struct proc *, struct record_system_event_args *, in
 int mkfifoat(struct proc *, struct mkfifoat_args *, int *);
 int mknodat(struct proc *, struct mknodat_args *, int *);
 int ungraftdmg(struct proc *, struct ungraftdmg_args *, int *);
+#if CONFIG_COALITIONS
+int sys_coalition_policy_set(struct proc *, struct coalition_policy_set_args *, int *);
+int sys_coalition_policy_get(struct proc *, struct coalition_policy_get_args *, int *);
+#else
+#endif /* CONFIG_COALITIONS */
 
 __END_DECLS
 #undef PAD_

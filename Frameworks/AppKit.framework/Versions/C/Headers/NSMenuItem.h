@@ -1,7 +1,7 @@
 /*
         NSMenuItem.h
         Application Kit
-        Copyright (c) 1996-2023, Apple Inc.
+        Copyright (c) 1996-2024, Apple Inc.
         All rights reserved.
 */
 
@@ -31,6 +31,10 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 /// Items created using this method are non-interactive and do not perform an action.
 + (instancetype)sectionHeaderWithTitle:(NSString *)title API_AVAILABLE(macos(14.0)) NS_REFINED_FOR_SWIFT;
 
+/// An array of standard menu items related to Writing Tools.
+/// Each call to this method returns an array of newly allocated instances of NSMenuItem.
+@property (class, readonly, copy) NSArray<NSMenuItem *> *writingToolsItems API_AVAILABLE(macos(15.2));
+
 - (instancetype)initWithTitle:(NSString *)string action:(nullable SEL)selector keyEquivalent:(NSString *)charCode NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
@@ -45,6 +49,13 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 
 @property (copy) NSString *title;
 @property (nullable, copy) NSAttributedString *attributedTitle;
+
+/*!
+    @abstract       Used to specify a standard subtitle for the menu item.
+    @discussion     The subtitle is displayed below the standard title.
+    @note           On macOS 14, a menu item with an attributed title does not show the subtitle. The subtitle is shown on macOS 15 and later.
+*/
+@property (copy, nullable) NSString *subtitle API_AVAILABLE(macos(14.4));
 
 @property (getter=isSeparatorItem, readonly) BOOL separatorItem;
 

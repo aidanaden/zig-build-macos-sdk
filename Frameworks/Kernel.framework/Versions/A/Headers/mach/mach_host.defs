@@ -70,6 +70,10 @@ subsystem
 #endif	/* KERNEL_SERVER || KOBJECT_SERVER */
 		       mach_host 200;
 
+#if KERNEL_SERVER
+#define VM_KERNEL_SERVER 1
+#endif
+
 /*
  *	Basic types
  */

@@ -1,7 +1,7 @@
 /*
 	NSTextField.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2024, Apple Inc.
 	All rights reserved.
 */
 
@@ -57,6 +57,8 @@ APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST
 @property NSLineBreakStrategy lineBreakStrategy API_AVAILABLE(macos(10.15));
 #endif
 
+@property BOOL allowsWritingTools API_AVAILABLE(macos(15.2)); // Default is YES. Configures its field editor to work with Writing Tools.
+@property BOOL allowsWritingToolsAffordance API_AVAILABLE(macos(15.4)); // Default is NO.
 @end
 
 #pragma mark NSTextField NSTouchBar Properties

@@ -2,7 +2,7 @@
 set -euo pipefail
 set -x
 
-sdk='/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk'
+sdk=$(xcrun --sdk macosx --show-sdk-path)
 frameworks="$sdk/System/Library/Frameworks"
 includes="$sdk/usr/include"
 libs="$sdk/usr/lib"

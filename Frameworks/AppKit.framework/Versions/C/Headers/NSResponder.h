@@ -1,7 +1,7 @@
 /*
         NSResponder.h
         Application Kit
-        Copyright (c) 1994-2023, Apple Inc.
+        Copyright (c) 1994-2024, Apple Inc.
         All rights reserved.
 */
 
@@ -80,6 +80,24 @@ NS_SWIFT_UI_ACTOR
 - (void)quickLookWithEvent:(NSEvent *)event API_AVAILABLE(macos(10.8));
 
 - (void)pressureChangeWithEvent:(NSEvent *)event API_AVAILABLE(macos(10.10.3));
+
+/*!
+    @method        `contextMenuKeyDown`
+    @abstract      Handle a key event that should present a context menu at the user focus.
+    @discussion    Most applications should not override this method. Instead, you should customize the context menu displayed from a keyboard event by implementing `menuForEvent:` and `selectionAnchorRect`, or `showContextMenuForSelection:`, rather than this method.
+
+    You should only override this method when you do not want the system-provided default behavior for the context menu hotkey, either for a specific key combination, or for the hotkey in general. For example, if your application already provides a different behavior for control-Return (the default context menu hotkey definition), and you want to preserve that behavior, you should override this method to handle that specific key combination, and then return without calling `super`. Note that the user may customize the hotkey to a different key combination, so in this example, if any other key combination is passed to your method, you would call `super`.
+
+    An implementation of this method should call `[super contextMenuKeyDown:event]` to pass the request up the responder chain. If the message reaches the application object, NSApplication's implementation of this method will send `showContextMenuForSelection:` to the responder chain. If you do not call `super`, then no further handling of the key event will be performed.
+
+    @note          In some cases, `showContextMenuForSelection:` will be called without a prior call to `contextMenuKeyDown:`. This occurs when a view receives an Accessibility ShowMenu action, or when the user has created a Cocoa Text key binding to map a different key combination to the `showContextMenuForSelection:` action.
+
+    @param         event
+                   The key down event that matches the system-wide context menu hotkey combination.
+
+    @seealso       `showContextMenuForSelection:`
+  */
+- (void)contextMenuKeyDown:(NSEvent *)event API_AVAILABLE(macos(15.0));
 
 - (void)noResponderFor:(SEL)eventSelector;
 @property (readonly) BOOL acceptsFirstResponder;
@@ -261,6 +279,26 @@ NS_SWIFT_UI_ACTOR
 */
 - (void)quickLookPreviewItems:(nullable id)sender API_AVAILABLE(macos(10.8));
 
+/*!
+    @method        `showContextMenuForSelection`
+    @abstract      Present a context menu at the text cursor position, selection, or wherever is appropriate for your responder.
+    @discussion    NSView has a default implementation of this method. For any view that returns a non-nil value from `-menuForEvent:`, the default implementation will display that menu automatically. The NSView implementation uses the `selectionAnchorRect` method in the `NSViewContentSelectionInfo` protocol to determine the location of the selection and of the menu. The NSView implementation determines the menu to display by calling `menuForEvent:` with a right-mouse-down event that is centered on the anchor rect. If `selectionAnchorRect` is not implemented, then the NSView implementation calls `menuForEvent` with a right-mouse-down event that is centered on the view's bounds, and also displays the menu at that location.
+
+    You should only override this method in a custom view if you need full control over the display of a context menu from the keyboard or Accessibility, beyond what is provided by default by NSView.
+
+    If the view does not support a context menu, then you should call `[[self nextResponder] tryToPerform:_cmd with:sender]` to pass the request up the responder chain.
+
+    @note          In some cases, this method will be called without a prior call to `contextMenuKeyDown:`. This occurs when a view receives an Accessibility ShowMenu action, or when the user has created a Cocoa Text key binding to map a different key combination to the `showContextMenuForSelection:` action.
+
+    @param         sender
+                   The object that originated the display of the context menu.
+
+    @seealso       `menuForEvent:`
+    @seealso       `selectionAnchorRect`
+    @seealso       `contextMenuKeyDown:`
+  */
+- (void)showContextMenuForSelection:(nullable id)sender API_AVAILABLE(macos(15.0));
+
 @end
 
 @interface NSResponder (NSStandardKeyBindingMethods) <NSStandardKeyBindingResponding>
@@ -336,6 +374,12 @@ You can override this method to customize the presentation of errors by examinin
 /* For automatic window tabbing: This method can be implemented in the responder chain. It is automatically called for tabbed windows when the plus button is clicked, and the next window that is created and shown will be placed in a tab. This can be implemented in an NSDocumentController subclass, or somewhere in the responder chain starting at NSWindow (such as NSWindow, the window delegate, the windowController, the NSApp delegate, etc. A plus button on tabbed windows will only be shown if this method exists in the responder chain.
  */
 - (IBAction)newWindowForTab:(nullable id)sender API_AVAILABLE(macos(10.12));
+
+@end
+
+@interface NSResponder(NSWritingToolsSupport)
+
+- (IBAction)showWritingTools:(nullable id)sender API_AVAILABLE(macos(15.2));
 
 @end
 

@@ -1,7 +1,7 @@
 /*
     NSManagedObject.h
     Core Data
-    Copyright (c) 2004-2023, Apple Inc.
+    Copyright (c) 2004-2025, Apple Inc.
     All rights reserved.
 */
 

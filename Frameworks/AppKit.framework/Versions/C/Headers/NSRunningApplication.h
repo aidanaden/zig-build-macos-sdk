@@ -1,7 +1,7 @@
 /*
 	NSRunningApplication.h
 	Application Kit
-	Copyright (c) 1994-2023, Apple Inc.
+	Copyright (c) 1994-2024, Apple Inc.
 	All rights reserved.
 */
 
@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, NSApplicationActivationPolicy) {
  
  To access the list of all running applications, use the `-runningApplications` method on `NSWorkspace`.
 */
-API_AVAILABLE(macos(10.6))
+API_AVAILABLE(macos(10.6)) NS_SWIFT_SENDABLE
 @interface NSRunningApplication : NSObject
 
 /// Indicates that the process is an exited application.

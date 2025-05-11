@@ -24,7 +24,6 @@
 #import <Foundation/NSMassFormatter.h>
 #import <Foundation/NSLengthFormatter.h>
 #import <Foundation/NSEnergyFormatter.h>
-#import <Foundation/NSMeasurement.h>
 #import <Foundation/NSMeasurementFormatter.h>
 #import <Foundation/NSPersonNameComponents.h>
 #import <Foundation/NSPersonNameComponentsFormatter.h>
@@ -49,6 +48,7 @@
 #import <Foundation/NSJSONSerialization.h>
 #import <Foundation/NSKeyValueCoding.h>
 #import <Foundation/NSKeyValueObserving.h>
+#import <Foundation/NSKeyValueSharedObservers.h>
 #import <Foundation/NSKeyedArchiver.h>
 #import <Foundation/NSLocale.h>
 #import <Foundation/NSLock.h>
@@ -60,6 +60,7 @@
 #import <Foundation/NSNotificationQueue.h>
 #import <Foundation/NSNull.h>
 #import <Foundation/NSNumberFormatter.h>
+#import <Foundation/NSLocalizedNumberFormatRule.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSOperation.h>
 #import <Foundation/NSOrderedSet.h>

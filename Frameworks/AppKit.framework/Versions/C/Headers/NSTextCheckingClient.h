@@ -1,7 +1,7 @@
 /*
         NSTextCheckingClient.h
         Application Kit
-        Copyright (c) 2018-2023, Apple Inc.
+        Copyright (c) 2018-2024, Apple Inc.
         All rights reserved.
 */
 
@@ -25,6 +25,37 @@ typedef NS_ENUM(NSInteger, NSTextInputTraitType) {
    NSTextInputTraitTypeYes,
 };
 
+typedef NS_ENUM(NSInteger, NSWritingToolsBehavior) {
+    // Writing Tools will ignore this view
+    NSWritingToolsBehaviorNone = -1,
+
+    // System-defined behavior, may resolve to `None`, `Complete`, or `Limited`
+    NSWritingToolsBehaviorDefault = 0,
+
+    // The complete inline-editing experience will be provided if possible.
+    NSWritingToolsBehaviorComplete,
+
+    // The limited, overlay-panel experience will be provided if possible.
+    NSWritingToolsBehaviorLimited,
+} API_AVAILABLE(macos(15.0));
+
+typedef NS_OPTIONS(NSUInteger, NSWritingToolsResultOptions) {
+    // System—defined behavior
+    NSWritingToolsResultDefault = 0,
+
+    // Writing Tools will provide plain text in proofreading suggestions or rewrites
+    NSWritingToolsResultPlainText = 1 << 0,
+
+    // as well as plain text, Writing Tools will provide text attributes in proofreading suggestions or rewrites that are natively supported or known to be easily adopted (such as lists)
+    NSWritingToolsResultRichText = 1 << 1,
+
+    // implies `RichText`, and Writing Tools may provide attributes for list layout
+    NSWritingToolsResultList = 1 << 2,
+
+    // implies `RichText`, and Writing Tools may provide attributes for tabular layout
+    NSWritingToolsResultTable = 1 << 3,
+} API_AVAILABLE(macos(15.0));
+
 @protocol NSTextInputTraits
 @optional
 @property NSTextInputTraitType autocorrectionType;
@@ -38,6 +69,10 @@ typedef NS_ENUM(NSInteger, NSTextInputTraitType) {
 @property NSTextInputTraitType linkDetectionType;
 @property NSTextInputTraitType textCompletionType;
 @property NSTextInputTraitType inlinePredictionType API_AVAILABLE(macos(14.0));
+@property NSTextInputTraitType mathExpressionCompletionType API_AVAILABLE(macos(15.0));
+
+@property NSWritingToolsBehavior writingToolsBehavior API_AVAILABLE(macos(15.0));
+@property NSWritingToolsResultOptions allowedWritingToolsResultOptions API_AVAILABLE(macos(15.0));
 @end
 
 @protocol NSTextCheckingClient <NSTextInputClient, NSTextInputTraits>

@@ -30,12 +30,12 @@
 /* VERSION_MAJOR, version_major is an integer that represents that major version
  * of the kernel
  */
-#define VERSION_MAJOR		23
+#define VERSION_MAJOR		24
 
 /* VERSION_MINOR, version_minor is an integer that represents the minor version
  * of the kernel
  */
-#define VERSION_MINOR		2
+#define VERSION_MINOR		4
 
 /* VERSION_VARIANT, version_variant is a string that contains the revision,
  * stage, and prerelease level of the kernel
@@ -61,13 +61,13 @@
 
 /* OSBUILD_CONFIG, osbuild_config is a one-word string describing the build
  * configuration of the kernel, e.g., development or release */
-#define OSBUILD_CONFIG  "development"
+#define OSBUILD_CONFIG  "release"
 
 /* OSTYPE, ostype, is a string as returned by uname -s */
 #define	OSTYPE		"Darwin"
 
 /* OSRELEASE, osrelease, is a string as returned by uname -r */
-#define OSRELEASE	"23.2.0"
+#define OSRELEASE	"24.4.0"
 
 #ifndef ASSEMBLER
 

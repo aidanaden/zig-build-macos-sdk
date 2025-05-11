@@ -78,14 +78,14 @@
 #define SHARED_REGION_NESTING_MAX_ARM           ?
 
 #define SHARED_REGION_BASE_ARM64_32             0x1A000000ULL
-#define SHARED_REGION_SIZE_ARM64_32             0xa6000000ULL /* up to 0xc0000000 */
+#define SHARED_REGION_SIZE_ARM64_32             0x88000000ULL /* up to 0xA2000000 */
 #define SHARED_REGION_NESTING_BASE_ARM64_32     0x1A000000ULL
-#define SHARED_REGION_NESTING_SIZE_ARM64_32     0xa6000000ULL
+#define SHARED_REGION_NESTING_SIZE_ARM64_32     0x88000000ULL
 #define SHARED_REGION_NESTING_MIN_ARM64_32      ?
 #define SHARED_REGION_NESTING_MAX_ARM64_32      ?
 
 #define SHARED_REGION_BASE_ARM64                0x180000000ULL
-#define SHARED_REGION_SIZE_ARM64                0x100000000ULL
+#define SHARED_REGION_SIZE_ARM64                0x180000000ULL
 #define SHARED_REGION_NESTING_BASE_ARM64        SHARED_REGION_BASE_ARM64
 #define SHARED_REGION_NESTING_SIZE_ARM64        SHARED_REGION_SIZE_ARM64
 #define SHARED_REGION_NESTING_MIN_ARM64         ?
@@ -146,7 +146,7 @@ struct shared_file_mapping_np {
 	vm_prot_t               sfm_init_prot;
 };
 
-struct shared_file_mapping_slide_np {
+typedef struct shared_file_mapping_slide_np {
 	/* address at which to create mapping */
 	mach_vm_address_t       sms_address __kernel_data_semantics;
 	/* size of region to map */
@@ -160,7 +160,8 @@ struct shared_file_mapping_slide_np {
 	/* protections, plus flags, see below */
 	vm_prot_t               sms_max_prot;
 	vm_prot_t               sms_init_prot;
-};
+} shared_file_mapping_slide_np_t;
+
 struct shared_file_np {
 	int                     sf_fd;             /* file to be mapped into shared region */
 	uint32_t                sf_mappings_count; /* number of mappings */
@@ -187,6 +188,13 @@ struct shared_file_np {
 #define VM_PROT_SLIDE                    0x20
 #define VM_PROT_NOAUTH                   0x40
 #define VM_PROT_TRANSLATED_ALLOW_EXECUTE 0x80
+
+#define VM_PROT_SFM_EXTENSIONS_MASK       \
+	(VM_PROT_COW |                    \
+	VM_PROT_ZF |                      \
+	VM_PROT_SLIDE |                   \
+	VM_PROT_NOAUTH |                  \
+	VM_PROT_TRANSLATED_ALLOW_EXECUTE)
 
 
 __BEGIN_DECLS

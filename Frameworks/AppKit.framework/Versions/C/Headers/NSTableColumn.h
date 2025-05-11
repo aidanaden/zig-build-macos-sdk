@@ -1,7 +1,7 @@
 /*
     NSTableColumn.h
     Application Kit
-    Copyright (c) 1995-2023, Apple Inc.
+    Copyright (c) 1995-2024, Apple Inc.
     All rights reserved.
 */
 
@@ -23,6 +23,7 @@ typedef NS_OPTIONS(NSUInteger, NSTableColumnResizingOptions) {
     NSTableColumnUserResizingMask = ( 1 << 1 ), // The user can resize this column manually.
 };
 
+NS_SWIFT_UI_ACTOR
 @interface NSTableColumn : NSObject <NSCoding, NSUserInterfaceItemIdentification>
 
 /* Designated initializer for NSTableColumns. Prior to 10.7, the parameter type was 'id', but it is now an 'NSString *'. See also -setIdentifier: and -identifier, and NSUserInterfaceItemIdentification.

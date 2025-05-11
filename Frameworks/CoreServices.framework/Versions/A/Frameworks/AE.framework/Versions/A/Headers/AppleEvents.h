@@ -60,6 +60,14 @@ CF_ENUM(AEKeyword) {
   keyAEVersion                  = 'vers' /* available only in vers 1.0.1 and greater */
 };
 
+#if __MAC_OS_X_VERSION_MIN_REQUIRED >= 1500
+CF_ENUM(AEKeyword) {
+	kAEApplicationActivationExpected = 'aapd'	 //!< in a kAEOpenDocuments/kAEReopenApplication event, a typeBoolean value, if true then the process should expect a request to be frontmost to accompany this AppleEvent
+};
+#endif
+
+
+
 /* Event Class */
 CF_ENUM(DescType) {
   kCoreEventClass               = 'aevt'

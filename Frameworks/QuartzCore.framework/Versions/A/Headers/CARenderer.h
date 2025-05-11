@@ -3,6 +3,7 @@
    Copyright (c) 2007-2022, Apple Inc.
    All rights reserved. */
 
+
 /* This class lets an application manually drive the rendering of a
  * layer tree into an OpenGL rendering context. This is _not_ the
  * best solution for real-time output, use an NSView to host a layer
@@ -29,6 +30,7 @@
  *    from the -render method, the default values will be preserved.
  */
 
+
 #ifdef __OBJC__
 
 #import <QuartzCore/CABase.h>
@@ -38,14 +40,15 @@
 @class NSDictionary, CALayer;
 @protocol MTLTexture;
 
-NS_ASSUME_NONNULL_BEGIN
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
+API_AVAILABLE(macos(10.5), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos)
 @interface CARenderer : NSObject
 {
 @private
   struct CARendererPriv *_priv;
 }
+
 
 /* Create a new renderer object. Its render target is the specified
  * Core OpenGL context. 'dict' is an optional dictionary of parameters.  */
@@ -59,12 +62,13 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 #endif
 
 
+
 /* Create a new renderer object. Its render target is the specified
  * texture. 'dict' is an optional dictionary of parameters.  */
 
 + (CARenderer *)rendererWithMTLTexture:(id<MTLTexture>)tex
     options:(nullable NSDictionary *)dict
-    API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
+    API_AVAILABLE(macos(10.13), ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos);
 
 /* The root layer associated with the renderer. */
 
@@ -115,7 +119,7 @@ API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0))
 /* The CGColorSpaceRef object defining the output color space. */
 
 CA_EXTERN NSString * const kCARendererColorSpace
-    API_AVAILABLE(macos(10.6), ios(2.0), watchos(2.0), tvos(9.0));
+    API_AVAILABLE(macos(10.6), ios(2.0), tvos(9.0)) API_UNAVAILABLE(watchos);
 
 /* The Metal Command Queue object against which to submit work.
  *
@@ -127,8 +131,8 @@ CA_EXTERN NSString * const kCARendererColorSpace
  * automatically commits and waitUntilScheduled. */
 
 CA_EXTERN NSString * const kCARendererMetalCommandQueue
-    API_AVAILABLE(macos(10.14), ios(12.0), watchos(5.0), tvos(12.0));
+    API_AVAILABLE(macos(10.14), ios(12.0), tvos(12.0)) API_UNAVAILABLE(watchos);
 
-NS_ASSUME_NONNULL_END
+NS_HEADER_AUDIT_END(nullability, sendability)
 
 #endif

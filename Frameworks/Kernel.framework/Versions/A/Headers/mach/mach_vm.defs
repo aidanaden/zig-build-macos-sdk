@@ -72,6 +72,10 @@ subsystem
 #endif
 	4800;
 
+#if KERNEL_SERVER
+#define VM_KERNEL_SERVER 1
+#endif
+
 #include <mach/std_types.defs>
 #include <mach/mach_types.defs>
 #include <mach_debug/mach_debug_types.defs>
@@ -280,7 +284,7 @@ routine vm_msync(
 		target_task	: vm_map_t;
 		address		: mach_vm_address_t;
 		size		: mach_vm_size_t;
-		sync_flags	: vm_sync_t );
+		sync_flags	: vm_sync_t);
 
 /*
  *	Set the paging behavior attribute for the specified range
@@ -442,7 +446,7 @@ routine vm_region_64(
  *	THIS INTERFACE IS STILL EVOLVING.
  */
 #if !defined(_MACH_VM_PUBLISH_AS_LOCAL_)
-#if !defined(__LP64__) || KERNEL_SERVER || XNU_KERNEL_PRIVATE || LIBSYSCALL_INTERFACE
+#if !defined(__LP64__) || KERNEL_SERVER || XNU_KERNEL_PRIVATE || LIBSYSCALL_INTERFACE || KERNEL_VM_TEST
 routine _mach_make_memory_entry(
 #else
 routine mach_make_memory_entry(
@@ -529,14 +533,15 @@ routine PREFIX(KERNEL_SERVER_SUFFIX(vm_remap_new)) (
  */
 #if !defined(LIBSYSCALL_INTERFACE) && !defined(_MACH_VM_PUBLISH_AS_LOCAL_)
 
-routine mach_vm_deferred_reclamation_buffer_init(
+routine mach_vm_deferred_reclamation_buffer_allocate(
 		target_task	: task_t;
-		address		: mach_vm_offset_t;
-		size		: mach_vm_size_t);
+	out	address	        : mach_vm_address_t;
+		len             : uint32_t;
+		max_len         : uint32_t);
 
-routine mach_vm_deferred_reclamation_buffer_synchronize(
+routine mach_vm_deferred_reclamation_buffer_flush(
 		target_task		: task_t;
-		num_entries_to_reclaim	: mach_vm_size_t);
+		num_entries_to_reclaim	: uint32_t);
 
 routine mach_vm_deferred_reclamation_buffer_update_reclaimable_bytes(
 		target_task		: task_t;
@@ -553,6 +558,14 @@ routine mach_vm_range_create(
 		target_task	: vm_map_t;
 		flavor		: mach_vm_range_flavor_t;
 		recipes		: mach_vm_range_recipes_raw_t);
+#else
+skip;
+#endif
+
+#if !defined(LIBSYSCALL_INTERFACE) && !defined(_MACH_VM_PUBLISH_AS_LOCAL_)
+routine mach_vm_deferred_reclamation_buffer_resize(
+		target_task	: task_t;
+		size		: uint32_t);
 #else
 skip;
 #endif

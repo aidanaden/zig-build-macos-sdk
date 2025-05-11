@@ -1,7 +1,7 @@
 /*
 	AppKitErrors.h
 	Application Kit
-	Copyright (c) 2004-2023, Apple Inc.
+	Copyright (c) 2004-2024, Apple Inc.
 	All rights reserved.
 */
 
@@ -56,6 +56,14 @@ enum {
     NSWindowSharingRequestUnspecifiedError API_AVAILABLE(macos(13.3)) = 67458,
     NSWindowSharingErrorMinimum API_AVAILABLE(macos(13.3)) = 67456,
     NSWindowSharingErrorMaximum API_AVAILABLE(macos(13.3)) = 67466,
+
+    // NSPasteboard
+    NSPasteboardMiscellaneousError API_AVAILABLE(macos(15.4)) = 67584,
+    NSPasteboardCommunicationError API_AVAILABLE(macos(15.4)) = 67585,
+    NSPasteboardInvalidArgumentError API_AVAILABLE(macos(15.4)) = 67586,
+    NSPasteboardContentsNotAvailableError API_AVAILABLE(macos(15.4)) = 67587,
+    NSPasteboardErrorMinimum API_AVAILABLE(macos(15.4)) = 67584,
+    NSPasteboardErrorMaximum API_AVAILABLE(macos(15.4)) = 67839,
 };
 
 API_UNAVAILABLE_END
